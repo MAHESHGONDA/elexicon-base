@@ -1,0 +1,15 @@
+{
+    "name": "elexicon/elexicon",
+    "description": "anexamplethemegeneratedfromtheelexiconthemegenerator",
+    "type": "project",
+    "license": "MIT",
+    "keywords": ["wordpress"],
+    "require": {
+      "php": ">=5.4"
+    },
+    "autoload": {
+      "psr-4": {
+        "Elexicon\\": "inc/core/"
+      }
+    }
+}

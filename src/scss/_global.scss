@@ -1,0 +1,12 @@
+/**
+ * Global Styles
+ */
+
+html,
+body {
+	@include font-smoothing(on);
+}
+
+.container-fluid {
+	max-width: 1440px;
+}
