@@ -1,3 +1,5 @@
+# Note: This is an example theme generated from the Elexicon Theme Generator as linked below.
+
 # [Elexicon Theme Generator](http://theme-generator.elexicon.com)
 
 Building custom WordPress themes can be redundant and annoyingly repetitive. The [Elexicon](http://elexicon.com) Theme Generator aims to eliminate the annoying stuff we repeat every time we develop a new theme. Follow the installation instructions to get started. For full documentation visit http://theme-generator.elexicon.com/docs/
