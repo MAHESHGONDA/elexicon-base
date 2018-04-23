@@ -7,9 +7,9 @@
  * @version 1.0.0
  */
 
-namespace Elexicon;
+namespace Lexi\Core;
 
-if( !class_exists('Elexicon\Helper') ) :
+if( !class_exists('Lexi\Core\Helper') ) :
 
 	class Helper {
 
@@ -50,9 +50,9 @@ if( !class_exists('Elexicon\Helper') ) :
 		public static $icons_url;
 
 		public function __construct() {
-			self::$theme_name = 'elexicon';
-			self::$theme_slug = 'elexicon';
-			self::$theme_prefix = 'elexicon';
+			self::$theme_name = 'lexitheme';
+			self::$theme_slug = 'lexi';
+			self::$theme_prefix = 'lexi';
 			self::$theme_version = '1.1.0';
 			self::$parts = 'template-parts/';
 			self::$icons_url = '//icongr.am/';
@@ -280,7 +280,76 @@ if( !class_exists('Elexicon\Helper') ) :
 		  $svg_code = file_get_contents($url, FILE_USE_INCLUDE_PATH);
 		  return $svg_code;
 		}
+
+		/**
+		 * Pluralize a string
+		 * @param  string $string String to make plural
+		 * @return string         Pluralized string
+		 */
+		public static function pluralize($string) {
+			$last = $string[strlen($string) - 1];
+
+			if($last == 'y') {
+				$cut = substr($string, 0, -1);
+				//convert y to ies
+				$plural = $cut . 'ies';
+			} else {
+				// just attach an s
+				$plural = $string . 's';
+			}
+
+			return $plural;
+		}
+
+		/**
+		 * Format string for title display`
+		 * @param  string $string String to format
+		 * @return string         Formatted/Beautified string
+		 */
+		public static function beautify_title($string) {
+			return ucwords(str_replace("_", " ", $string));
+		}
+
+		/**
+		 * Format string for database saving
+		 * @param  string $string String to format
+		 * @return string         Database safe formatted string
+		 */
+		public static function uglify_title($string) {
+			return strtolower(str_replace(' ', '_', $string));
+		}
+
+		/**
+		 * General cURL request
+		 * @param string $url		URL to send to the cURL request to
+		 */
+		public static function curl_request($url) {
+
+			$ch = curl_init();
+
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1);
+			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+			curl_setopt($ch, CURLOPT_FAILONERROR, 1);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+			if (defined('CURLOPT_IPRESOLVE') && defined('CURL_IPRESOLVE_V4'))
+				curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+
+			$cont = curl_exec($ch);
+
+			if(curl_errno($ch)) {
+				//die(curl_error($ch));
+				$c_err['curl_message'] = curl_error($ch);
+				$c_err['error'] = "0";
+				return $c_err;
+			}
+
+			curl_close($ch);
+			return $cont;
+		}
 	}
 
-	new \Elexicon\Helper;
+	new \Lexi\Core\Helper;
 endif;

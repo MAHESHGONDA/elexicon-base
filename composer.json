@@ -1,15 +1,25 @@
 {
     "name": "elexicon/elexicon",
-    "description": "demothemegeneratedfromtheelexiconthemegenerator",
+    "description": "abasicwpthemegeneratedfromthelexithemegenerator",
     "type": "project",
     "license": "MIT",
     "keywords": ["wordpress"],
+    "authors": [
+      {
+        "name": "Tyler Bailey",
+        "email": "tylerb.media@gmail.com",
+        "homepage": "https://www.tylerb.me"
+      }
+    ],
     "require": {
       "php": ">=5.4"
     },
     "autoload": {
       "psr-4": {
-        "Elexicon\\": "inc/core/"
+        "Lexi\\Core\\": "inc/lexi/",
+        "Lexi\\Factory\\": "inc/lexi/factory/",
+        "Lexi\\ShareCount\\": "inc/lexi/sharecounts/",
+        "Lexi\\Shortcodes\\": "inc/lexi/shortcodes/"
       }
     }
 }
