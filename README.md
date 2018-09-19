@@ -1,6 +1,4 @@
-# NOTE - this is an example theme generated from the Lexi Theme Generator. To use this theme, clone this repo and follow the [Getting Started](http://theme-generator.elexicon.com/docs/#/?id=getting-started) docs.
-
-# [Lexi Theme](http://theme-generator.elexicon.com)
+# [Elexicon Theme Generator](http://theme-generator.elexicon.com)
 
 Building custom WordPress themes can be redundant and annoyingly repetitive. The [Elexicon](http://elexicon.com) Theme Generator aims to eliminate the annoying stuff we repeat every time we develop a new theme. Follow the installation instructions to get started. For full documentation visit http://theme-generator.elexicon.com/docs/
 

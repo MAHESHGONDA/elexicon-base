@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package elexicon
+ * @package elexicondemo
  */
 
 ?><!DOCTYPE html>
@@ -27,7 +27,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 			<div class="container-fluid">
 
-				<a class="navbar-brand" href="<?php echo home_url(); ?>">elexicon</a>
+				<a class="navbar-brand" href="<?php echo home_url(); ?>">elexicondemo</a>
 
 				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="icon-bar top-bar"></span>
@@ -36,7 +36,7 @@
 				</button>
 
 				<?php
-					// elexicon Theme Navigation
+					// elexicondemo Theme Navigation
 					wp_nav_menu(array(
 						'menu' => 'Primary Menu',
 						'theme_location' => 'primary',

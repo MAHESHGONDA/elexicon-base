@@ -1,7 +1,7 @@
 <?php
 /**
  * Post index page template
- * @package elexicon
+ * @package elexicondemo
  */
 
 get_header(); ?>
@@ -13,12 +13,12 @@ get_header(); ?>
 				<?php if(have_posts()) : ?>
 					<?php while(have_posts()) : the_post(); ?>
 
-						<?php \Lexi\Core\Helper::get_partial('post-list'); ?>
+						<?php lexi_partial('components/post-list'); ?>
 
 					<?php endwhile; ?>
 				<?php else : ?>
 
-					<h4><?php _e('No posts found!', \Lexi\Core\Helper::$theme_prefix); ?></h4>
+					<h4><?php _e('No posts found!', \Lexi\Core\Helper::$theme_slug); ?></h4>
 
 				<?php endif; ?>
 

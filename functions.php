@@ -1,25 +1,25 @@
 <?php
 /**
- * elexicon functions and definitions.
- *
- * @package elexicon
- */
+* elexicondemo functions and definitions.
+*
+* @package elexicondemo
+*/
 
- $whitelist = array(
-     '127.0.0.1',
-     '::1'
- );
+$whitelist = array(
+  '127.0.0.1',
+  '::1'
+);
 
 if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-    define('LEXI_DEV', true);
+  define('LEXI_DEV', true);
 } else {
-	define('LEXI_DEV', false);
+  define('LEXI_DEV', false);
 }
 
 define('LEXI_DIR', __DIR__ . '/inc/lexi/');
-define('ELEXICON_DIR', __DIR__);
-define('ELEXICON_URL', get_template_directory_uri());
+define('ELX_DIR', __DIR__);
+define('ELX_URL', get_template_directory_uri());
 
 // Load the theme initialization class
-require_once(ELEXICON_DIR . '/vendor/autoload.php');
-$elexicon = new \Lexi\Core\ThemeInit;
+require_once(ELX_DIR . '/vendor/autoload.php');
+$elx = new \Lexi\Core\ThemeInit;
