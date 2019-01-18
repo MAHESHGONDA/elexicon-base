@@ -10,8 +10,6 @@
  */
 
 namespace Lexi\Core;
-
-use \Lexi\Shortcodes\Register as RegisterShortcodes;
 use \Lexi\Core\Helper;
 
 class ThemeInit {
@@ -23,7 +21,6 @@ class ThemeInit {
 	 */
 	public function __construct() {
 		$this->setup_theme();
-		require_once(LEXI_DIR . 'theme-functions.php');
 	}
 
 	private function setup_theme() {
@@ -34,14 +31,21 @@ class ThemeInit {
 		add_action('init', array($this, 'register_theme_menus'));
 		add_action('upload_mimes', array($this, 'add_svg_support'));
 
-		$this->register_theme_shortcodes();
+		$this->load_dependencies();
 	}
 
 	/**
-	 * Register theme shortcodes
+	 * Load Lexi dependency files & register shortcodes
+	 * @return null
 	 */
-	private function register_theme_shortcodes() {
-		new RegisterShortcodes();
+	private function load_dependencies() {
+		require_once(LEXI_DIR . 'theme-functions.php');
+
+		new \Lexi\Shortcodes\Register();
+
+		if( file_exists( ELX_DIR . '/inc/elexicon-functions.php' ) ) {
+			include_once( ELX_DIR . '/inc/elexicon-functions.php' );
+		}
 	}
 
 	/**
@@ -55,7 +59,7 @@ class ThemeInit {
 		 * If you're building a theme based on beer, use a find and replace
 		 * to change 'beer' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain(Helper::$theme_slug, get_template_directory() . '/languages');
+		load_theme_textdomain('lexi', get_template_directory() . '/languages');
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support('automatic-feed-links');
@@ -126,6 +130,13 @@ class ThemeInit {
 		remove_action('wp_print_styles', 'print_emoji_styles');
 		remove_action('admin_print_scripts', 'print_emoji_detection_script');
 		remove_action('admin_print_styles', 'print_emoji_styles');
+
+		if( $this->is_gutenberg() ) {
+			// disable for posts
+			add_filter( 'use_block_editor_for_post', '__return_false', 10 );
+			// disable for post types
+			add_filter( 'use_block_editor_for_post_type', '__return_false', 10 );
+		}
 	}
 
 	/**
@@ -135,12 +146,13 @@ class ThemeInit {
 	public function enqueue_files() {
 		// Stylesheets
 		wp_enqueue_style('wp-styles', get_stylesheet_uri());
-		wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
+		wp_enqueue_style('font-awesome', '//use.fontawesome.com/releases/v5.6.3/css/all.css');
 
-		$theme_style = (LEXI_DEV ? 'style.css' : 'style.min.css');
+		$theme_style = (defined('LEXI_DEV') ? 'style.css' : 'style.min.css');
 		wp_enqueue_style('lexi-style', get_template_directory_uri() . '/dist/styles/' . $theme_style );
 
-		wp_enqueue_script('lexi-js', get_template_directory_uri() . '/dist/js/bundle.js', array(), '1.0.0', true);
+		$theme_script = (defined('LEXI_DEV') ? 'bundle.js' : 'bundle.min.js');
+		wp_enqueue_script('lexi-js', get_template_directory_uri() . '/dist/js/' . $theme_script, array(), '1.0.0', true);
 
 		// Localize scripts
 		$this->localize_theme_scripts();
@@ -155,7 +167,7 @@ class ThemeInit {
 	public function add_svg_support($file_types) {
 		$new_filetypes = array();
 		$new_filetypes['svg'] = 'image/svg+xml';
-		$file_types = array_merge($file_types, $new_filetypes );
+		$file_types = array_merge( $file_types, $new_filetypes );
 		return $file_types;
 	}
 
@@ -164,12 +176,14 @@ class ThemeInit {
 	 * @return null
 	 */
 	private function localize_theme_scripts() {
-		global $post;
 
-		$cur_page = $post->post_name;
+		$cur_page = '';
 
 		if(is_archive()) {
 			$cur_page = get_post_type();
+		} else {
+			global $post;
+			$cur_page = $post->post_name;
 		}
 		// Localize the global admin-ajax URL
 		// usage: autoloader.ajaxurl;
@@ -178,11 +192,12 @@ class ThemeInit {
 			'lexi',
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'isMobile' => (wp_is_mobile() ? true : false),
 				'curPage' => $cur_page,
 				'isHome' => (is_home() || is_front_page() ? true : false),
 				'isSingle' => (is_single() ? true : false),
-				'ajaxnonce' => wp_create_nonce('ajax-nonce'),
+				'ajaxnonce' => wp_create_nonce('lexi-nonce'),
+				'isUser' => (is_user_logged_in() ? true : false),
+				'isDev' => (defined('LEXI_DEV') ? true : false)
 			)
 		);
 	}
@@ -192,7 +207,7 @@ class ThemeInit {
 	 */
 	public function register_theme_menus() {
 		$menus = array(
-			__('Primary Menu', Helper::$theme_slug)
+			__('Primary Menu', 'lexi')
 		);
 
 		foreach($menus as $menu) {
@@ -202,5 +217,14 @@ class ThemeInit {
 				$menu_id = wp_create_nav_menu($menu);
 			}
 		}
+	}
+
+	/**
+	 * Check if WP is using Gutenberg
+	 * @return boolean True||False if Gutenberg is active
+	 */
+	private function is_gutenberg() {
+		global $wp_version;
+		return ( function_exists( 'the_gutenberg_project' ) || version_compare( $wp_version, '5', '>=' ) );
 	}
 }

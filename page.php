@@ -3,7 +3,7 @@
  * The template for displaying all pages.
  * Required by WP
  *
- * @package elexicondemo
+ * @package elexicon
  */
 
 get_header(); ?>
@@ -20,7 +20,7 @@ get_header(); ?>
 					<?php endwhile; ?>
 				<?php else : ?>
 
-					<h4><?php _e('No posts found!', \Lexi\Core\Helper::$theme_slug); ?></h4>
+					<h4><?php _e('No posts found!', 'elexicon'); ?></h4>
 
 				<?php endif; ?>
 

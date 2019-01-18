@@ -16,6 +16,7 @@ class Taxonomy {
 	private $post_type;
 	private $args;
 	private $labels;
+	private $helper;
 
 	/**
 	 * Create custom taxonomy
@@ -32,7 +33,9 @@ class Taxonomy {
 	 * If taxonomy EXISTS it will be added to the specified post types
 	 */
 	public function __construct($name, $post_type = '', $args = array(), $labels = array()) {
-		$this->tax_name = Helper::uglify_title($name);
+		$this->helper = new Helper();
+
+		$this->tax_name = $this->helper->uglify_title($name);
 		$this->post_type = $post_type;
 		$this->args = $args;
 		$this->labels = $labels;
@@ -85,20 +88,20 @@ class Taxonomy {
 	 */
 	private function create_taxonomy() {
 		//Capitilize the words and make it plural
-		$name = Helper::beautify_title($this->tax_name);
-		$plural = Helper::pluralize($name);
+		$name = $this->helper->beautify_title($this->tax_name);
+		$plural = $this->helper->pluralize($name);
 
 		$default_labels = array(
 			'name' => $plural,
 			'singular_name' => $name,
-			'search_items' => sprintf(__('Search %s', Helper::$theme_slug), $plural),
-			'all_items' => sprintf(__('All %s', Helper::$theme_slug), $plural),
-			'parent_item' => sprintf(__('Parent %s', Helper::$theme_slug), $name),
-			'parent_item_colon' => sprintf(__('Parent %s:', Helper::$theme_slug), $name),
-			'edit_item' => sprintf(__('Edit %s', Helper::$theme_slug), $name),
-			'update_item' => sprintf(__('Update %s', Helper::$theme_slug), $name),
-			'add_new_item' => sprintf(__('Add New %s', Helper::$theme_slug), $name),
-			'new_item_name' => sprintf(__('New %s Name', Helper::$theme_slug), $name),
+			'search_items' => sprintf(__('Search %s', 'lexi'), $plural),
+			'all_items' => sprintf(__('All %s', 'lexi'), $plural),
+			'parent_item' => sprintf(__('Parent %s', 'lexi'), $name),
+			'parent_item_colon' => sprintf(__('Parent %s:', 'lexi'), $name),
+			'edit_item' => sprintf(__('Edit %s', 'lexi'), $name),
+			'update_item' => sprintf(__('Update %s', 'lexi'), $name),
+			'add_new_item' => sprintf(__('Add New %s', 'lexi'), $name),
+			'new_item_name' => sprintf(__('New %s Name', 'lexi'), $name),
 			'menu_name' => $name,
 		);
 

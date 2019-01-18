@@ -4,15 +4,15 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
- * @package elexicondemo
+ * @package elexicon
  */
 
 get_header(); ?>
 
 	<div id="primary" class="content-area">
 		<div class="container">
-			<div class="col-md-12">
-				<div class="row">
+			<div class="row">
+				<div class="col">
 					<?php while ( have_posts() ) : the_post(); ?>
 
 						<h1><?php the_title(); ?></h1>

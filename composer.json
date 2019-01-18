@@ -1,6 +1,6 @@
 {
-    "name": "elx/elexicondemo",
-    "description": "ademothemegeneratedfromthelexithemeframeworkgenerator",
+    "name": "elx/elexicon",
+    "description": "A simple demo theme for the Lexi Framework and Theme Generator.",
     "type": "project",
     "license": "MIT",
     "keywords": ["wordpress"],

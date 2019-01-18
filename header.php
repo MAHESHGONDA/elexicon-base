@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package elexicondemo
+ * @package elexicon
  */
 
 ?><!DOCTYPE html>
@@ -27,7 +27,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 			<div class="container-fluid">
 
-				<a class="navbar-brand" href="<?php echo home_url(); ?>">elexicondemo</a>
+				<a class="navbar-brand" href="<?php echo home_url(); ?>">Elexicon</a>
 
 				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="icon-bar top-bar"></span>
@@ -36,7 +36,7 @@
 				</button>
 
 				<?php
-					// elexicondemo Theme Navigation
+					// Elexicon Theme Navigation
 					wp_nav_menu(array(
 						'menu' => 'Primary Menu',
 						'theme_location' => 'primary',
@@ -44,10 +44,12 @@
 						'container' => 'div',
 						'container_class' => 'collapse navbar-collapse',
 						'container_id' => 'main-nav',
-						'menu_class' => 'navbar-nav mr-auto',
+						'menu_class' => 'navbar-nav ml-auto',
 						'fallback_cb' => '\Lexi\Core\NavWalker::fallback',
 						'walker' => new \Lexi\Core\NavWalker
 					));
+
+					get_search_form();
 				?>
 			</div>
 		</nav>

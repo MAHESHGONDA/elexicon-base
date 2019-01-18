@@ -2,7 +2,7 @@
 /**
  * The template for displaying the 404 Error Page
  *
- * @package elexicondemo
+ * @package elexicon
  */
 
 get_header(); ?>
@@ -11,7 +11,7 @@ get_header(); ?>
 	<div class="container">
 		<div class="col-md-12">
 			<div class="row">
-				<h4><?php _e('404 Page Not Found', \Lexi\Core\Helper::$theme_slug); ?></h4>
+				<h4><?php _e('404 Page Not Found', 'elexicon'); ?></h4>
 			</div>
 		</div>
 	</div><!-- .container -->
